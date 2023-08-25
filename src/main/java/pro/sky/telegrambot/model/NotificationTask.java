@@ -13,10 +13,18 @@ public class NotificationTask {
     @GeneratedValue
     private Long id;
     private Long chatId;
-    private String message;
     private LocalDateTime date_and_time;
+    private String message;
+
+    public NotificationTask(Long chatId, String message, LocalDateTime date_and_time) {
+//        this.id = id;
+        this.chatId = chatId;
+        this.message = message;
+        this.date_and_time = date_and_time;
+    }
 
     public NotificationTask() {
+
     }
 
     public Long getId() {
