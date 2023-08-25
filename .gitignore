@@ -6,3 +6,4 @@
 /target/classes/pro/sky/telegrambot/configuration/TelegramBotConfiguration.class
 /target/classes/pro/sky/telegrambot/listener/TelegramBotUpdatesListener.class
 /target/classes/scripts/notification_task.sql
+/target/
