@@ -37,7 +37,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             String welcomeMessage = update.message().chat().firstName() +
                     ", привет! Я бот-помощник. Я напомню тебе о важных делах!";
 
-
             if (incomingMessage.equals("/start")) {
                 SendMessage message = new SendMessage(chatId, welcomeMessage);
                 SendResponse response = telegramBot.execute(message);
