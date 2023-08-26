@@ -88,6 +88,16 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     public void schedulingLookForRecordsInDatabase() {
         LocalDateTime time = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         List<NotificationTask> tasks = notificationTaskRepository.findByDateAndTime(time);
+        sendReminderMessageToUser(tasks);
     }
 
+    public void sendReminderMessageToUser(List<NotificationTask> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            Long chatId = tasks.get(i).getChatId();
+            String answer = tasks.get(i).getMessage();
+
+            SendMessage reminderMessage = new SendMessage(chatId, answer);
+            SendResponse response = telegramBot.execute(reminderMessage);
+        }
+    }
 }
