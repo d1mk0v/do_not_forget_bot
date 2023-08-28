@@ -16,6 +16,7 @@ import pro.sky.telegrambot.repository.NotificationTaskRepository;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -73,9 +74,17 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
 
         if (matcher.matches()) {
+
             String date = matcher.group(1);
-            LocalDateTime date_and_time = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
             String message = matcher.group(3);
+
+            LocalDateTime date_and_time;
+            try {
+                date_and_time = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+            } catch (DateTimeParseException e) {
+                telegramBot.execute(new SendMessage(chatId, "Неверный формат даты и времени"));
+                return;
+            }
 
             notificationTaskRepository.save(new NotificationTask(chatId, message, date_and_time));
 
